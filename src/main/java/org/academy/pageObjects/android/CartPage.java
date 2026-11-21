@@ -1,5 +1,6 @@
 package org.academy.pageObjects.android;
 
+import io.qameta.allure.Step;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
@@ -44,6 +45,7 @@ public class CartPage extends AndroidActions {
         return productList;
     }
 
+    @Step("Calculate sum of product prices in cart")
     public double getProductsSum() {
         int count = productList.size();
         double totalSum = 0;
@@ -56,15 +58,18 @@ public class CartPage extends AndroidActions {
         return totalSum;
     }
 
+    @Step("Read displayed total amount")
     public Double getTotalAmountDisplayed() {
         return getFormattedAmount(totalAmount.getText());
     }
 
+    @Step("Accept terms and conditions")
     public void acceptTermsConditions() {
         longPressAction(terms);
         acceptButton.click();
     }
 
+    @Step("Tick checkbox and proceed to submit order")
     public void submitOrder() {
         checkBox.click();
         proceed.click();

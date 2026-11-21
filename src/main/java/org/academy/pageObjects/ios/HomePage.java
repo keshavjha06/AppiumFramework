@@ -1,5 +1,6 @@
 package org.academy.pageObjects.ios;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import io.appium.java_client.support.PageFactory;
 import org.academy.utils.IOSActions;
@@ -25,6 +26,7 @@ public class HomePage extends IOSActions {
     @iOSXCUITFindBy(accessibility = "Alert Views")
     private WebElement alertViews;
 
+    @Step("Open Alert Views")
     public AlertViews selectAlertViews() {
         alertViews.click();
         return new AlertViews(driver);

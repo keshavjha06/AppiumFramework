@@ -1,5 +1,6 @@
 package org.academy.pageObjects.ios;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import io.appium.java_client.support.PageFactory;
 import org.academy.utils.IOSActions;
@@ -42,6 +43,7 @@ public class AlertViews extends IOSActions {
     private WebElement submit;
 
 
+    @Step("Enter \"{name}\" in Text Entry alert")
     public void fillTextLabel(String name) {
 
         textEntryMenu.click();
@@ -50,6 +52,7 @@ public class AlertViews extends IOSActions {
 
     }
 
+    @Step("Open Confirm alert and read message")
     public String getConfirmMessage() {
         confirmMenuItem.click();
         return confirmMessage.getText();

@@ -1,5 +1,6 @@
 package org.academy.pageObjects.android;
 
+import io.qameta.allure.Step;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
@@ -27,11 +28,13 @@ public class ProductCatalogue extends AndroidActions {
 
     }
 
+    @Step("Add product at index {index} to cart")
     public void addItemToCartByIndex(int index) {
         addToCart.get(index).click();
 
     }
 
+    @Step("Open cart")
     public CartPage goToCartPage() throws InterruptedException {
         cart.click();
         Thread.sleep(2000);

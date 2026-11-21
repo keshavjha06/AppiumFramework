@@ -1,5 +1,6 @@
 package org.academy.pageObjects.android;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import io.appium.java_client.support.PageFactory;
@@ -37,16 +38,19 @@ public class FormPage extends AndroidActions {
     @AndroidFindBy(id = "com.androidsample.generalstore:id/btnLetsShop")
     private WebElement shopButton;
 
+    @Step("Enter name \"{name}\"")
     public void setNameField(String name) {
         nameField.sendKeys(name);
         driver.hideKeyboard();
 
     }
 
+    @Step("Launch General Store home screen")
     public void setActivity() {
         startActivity("com.androidsample.generalstore", "com.androidsample.generalstore.MainActivity");
     }
 
+    @Step("Select gender \"{gender}\"")
     public void setGender(String gender) {
         if (gender.contains("female"))
             femaleOption.click();
@@ -55,6 +59,7 @@ public class FormPage extends AndroidActions {
 
     }
 
+    @Step("Select country \"{countryName}\"")
     public void setCountrySelection(String countryName) {
         countrySelection.click();
         scrollToText(countryName);
@@ -62,6 +67,7 @@ public class FormPage extends AndroidActions {
 
     }
 
+    @Step("Submit form (Let's Shop)")
     public ProductCatalogue submitForm() {
         shopButton.click();
         return new ProductCatalogue(driver);
