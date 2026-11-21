@@ -1,74 +1,42 @@
 package org.academy.TestUtils;
 
-import java.io.IOException;
+import java.io.ByteArrayInputStream;
 
-import org.academy.utils.AppiumUtils;
-import org.testng.ITestContext;
-import org.testng.ITestListener;
+import org.openqa.selenium.OutputType;
+import org.testng.IInvokedMethod;
+import org.testng.IInvokedMethodListener;
 import org.testng.ITestResult;
 
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.Status;
-
 import io.appium.java_client.AppiumDriver;
+import io.qameta.allure.Allure;
+import io.qameta.allure.AttachmentOptions;
 
-public class Listeners extends AppiumUtils implements ITestListener {
-
-
-    ExtentTest test;
-    ExtentReports extent = ExtentReporterNG.getReporterObject();
-    AppiumDriver driver;
-
-
-    @Override
-    public void onTestStart(ITestResult result) {
-        test = extent.createTest(result.getMethod().getMethodName());
-    }
-
-    @Override
-    public void onTestSuccess(ITestResult result) {
-        test.log(Status.PASS, "Test Passed");
-
-    }
+/**
+ * Attaches a screenshot to the Allure report when a test fails.
+ * Allure's own TestNG listener (io.qameta.allure.testng.AllureTestNg) is registered
+ * automatically via ServiceLoader and records the test results and steps.
+ *
+ * The screenshot is taken in afterInvocation (not ITestListener#onTestFailure) because
+ * Allure closes the test result in its own onTestFailure, after which attachments
+ * no longer get linked to the test.
+ */
+public class Listeners implements IInvokedMethodListener {
 
     @Override
-    public void onTestFailure(ITestResult result) {
-        //screenshot code
-        test.fail(result.getThrowable());
-
-        try {
-            driver = (AppiumDriver) result.getTestClass().getRealClass().getField("driver")
-                    .get(result.getInstance());
-
-
-        } catch (Exception e1) {
-            e1.printStackTrace();
+    public void afterInvocation(IInvokedMethod method, ITestResult result) {
+        if (!method.isTestMethod() || result.getStatus() != ITestResult.FAILURE) {
+            return;
         }
         try {
-            test.addScreenCaptureFromPath(getScreenshotPath(result.getMethod().getMethodName(), driver), result.getMethod().getMethodName());
-        } catch (IOException e) {
+            AppiumDriver driver = (AppiumDriver) result.getTestClass().getRealClass().getField("driver")
+                    .get(result.getInstance());
+            if (driver != null) {
+                byte[] screenshot = driver.getScreenshotAs(OutputType.BYTES);
+                Allure.attachment(result.getMethod().getMethodName() + " - failure screenshot",
+                        "image/png", new ByteArrayInputStream(screenshot), AttachmentOptions.withFileExtension("png"));
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void onTestSkipped(ITestResult result) {
-
-    }
-
-    @Override
-    public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
-
-    }
-
-    @Override
-    public void onStart(ITestContext context) {
-
-    }
-
-    @Override
-    public void onFinish(ITestContext context) {
-        extent.flush();
     }
 }
