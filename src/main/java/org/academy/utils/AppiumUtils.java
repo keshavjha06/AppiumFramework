@@ -46,8 +46,13 @@ public abstract class AppiumUtils {
     }
 
     public AppiumDriverLocalService startAppiumServer(String ipAddress, int port) {
-        service = new AppiumServiceBuilder().withAppiumJS(new File("/opt/homebrew/lib/node_modules/appium/build/lib/main.js"))
-                .withIPAddress(ipAddress).usingPort(port).build();
+        AppiumServiceBuilder builder = new AppiumServiceBuilder().withIPAddress(ipAddress).usingPort(port);
+        // Appium is auto-discovered from the global npm root; override with -DappiumJS=/path/to/appium/index.js if needed
+        String appiumJS = System.getProperty("appiumJS");
+        if (appiumJS != null && !appiumJS.isBlank()) {
+            builder.withAppiumJS(new File(appiumJS));
+        }
+        service = builder.build();
         service.start();
         return service;
     }
@@ -61,7 +66,7 @@ public abstract class AppiumUtils {
 
     public String getScreenshotPath(String testCaseName, AppiumDriver driver) throws IOException {
         File source = driver.getScreenshotAs(OutputType.FILE);
-        String destinationFile = System.getProperty("user.dir") + "/reports" + testCaseName + ".png";
+        String destinationFile = System.getProperty("user.dir") + "/reports/" + testCaseName + ".png";
         FileUtils.copyFile(source, new File(destinationFile));
         return destinationFile;
         //1. capture and place in folder

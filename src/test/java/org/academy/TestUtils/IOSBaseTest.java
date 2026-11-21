@@ -35,8 +35,8 @@ public class IOSBaseTest extends AppiumUtils {
 
         XCUITestOptions options = new XCUITestOptions();
         options.setDeviceName("iPhone 18 Pro");
-        options.setApp("/Users/keshav.jha/IdeaProjects/AppiumFramework/src/test/java/org/academy/resources/UIKitCatalog.app");
-        options.setPlatformVersion("15.5");
+        options.setApp(System.getProperty("user.dir") + "/src/test/java/org/academy/resources/UIKitCatalog.app");
+        options.setPlatformVersion("27.2");
         //Appium- Webdriver Agent -> IOS Apps.
         options.setWdaLaunchTimeout(Duration.ofSeconds(20));
 

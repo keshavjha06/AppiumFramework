@@ -7,7 +7,6 @@ import org.academy.TestUtils.AndroidBaseTest;
 import org.testng.annotations.BeforeMethod;
 
 import io.appium.java_client.AppiumBy;
-import io.appium.java_client.android.Activity;
 
 public class Ecommerce2 extends AndroidBaseTest {
 
@@ -15,8 +14,7 @@ public class Ecommerce2 extends AndroidBaseTest {
     @BeforeMethod
     public void preSetup() {
         //screen to home page
-        Activity activity = new Activity("com.androidsample.generalstore", "com.androidsample.generalstore.MainActivity");
-        driver.startActivity(activity);
+        formPage.setActivity();
     }
 
     @Test
@@ -29,7 +27,7 @@ public class Ecommerce2 extends AndroidBaseTest {
         driver.findElement(By.xpath("//android.widget.TextView[@text='Argentina']")).click();
         driver.findElement(By.id("com.androidsample.generalstore:id/btnLetsShop")).click();
         String toastMessage = driver.findElement(By.xpath("(//android.widget.Toast)[1]")).getAttribute("name");
-        AssertJUnit.assertEquals(toastMessage, "Please your name");
+        AssertJUnit.assertEquals(toastMessage, "Please enter your name");
     }
 
 
