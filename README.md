@@ -38,7 +38,7 @@ Prerequisites
 =============
 - Java 21
 - Maven 3.9+
-- Appium 3 installed globally via npm (`npm install -g appium`), with drivers:
+- Appium 4 installed globally via npm (`npm install -g appium`), with drivers:
   - `appium driver install uiautomator2`
   - `appium driver install xcuitest`
 - Android: an emulator or real device visible in `adb devices`
