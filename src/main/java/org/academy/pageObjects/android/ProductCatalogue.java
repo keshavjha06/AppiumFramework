@@ -3,7 +3,7 @@ package org.academy.pageObjects.android;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
+import io.appium.java_client.support.PageFactory;
 import org.academy.utils.AndroidActions;
 
 import io.appium.java_client.android.AndroidDriver;
@@ -19,7 +19,6 @@ public class ProductCatalogue extends AndroidActions {
     //driver.findElements(By.xpath("//android.widget.TextView[@text='ADD TO CART']"))
     @AndroidFindBy(id = "com.androidsample.generalstore:id/appbar_btn_cart")
     private WebElement cart;
-
 
     public ProductCatalogue(AndroidDriver driver) {
         super(driver);
@@ -37,7 +36,6 @@ public class ProductCatalogue extends AndroidActions {
         cart.click();
         Thread.sleep(2000);
         return new CartPage(driver);
-
 
     }
 

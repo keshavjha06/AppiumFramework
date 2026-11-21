@@ -1,7 +1,7 @@
 package org.academy.pageObjects.ios;
 
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
+import io.appium.java_client.support.PageFactory;
 import org.academy.utils.IOSActions;
 
 import io.appium.java_client.ios.IOSDriver;

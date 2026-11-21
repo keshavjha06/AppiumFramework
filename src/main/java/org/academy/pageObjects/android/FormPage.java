@@ -2,10 +2,9 @@ package org.academy.pageObjects.android;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
+import io.appium.java_client.support.PageFactory;
 import org.academy.utils.AndroidActions;
 
-import io.appium.java_client.android.Activity;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
@@ -13,7 +12,6 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 public class FormPage extends AndroidActions {
 
     AndroidDriver driver;
-
 
     public FormPage(AndroidDriver driver) {
         super(driver);
@@ -24,11 +22,11 @@ public class FormPage extends AndroidActions {
 
     @AndroidFindBy(id = "com.androidsample.generalstore:id/nameField")
     private WebElement nameField;
-    //	driver.findElement(By.id("com.androidsample.generalstore:id/nameField"))
+    // driver.findElement(By.id("com.androidsample.generalstore:id/nameField"))
 
     @AndroidFindBy(xpath = "//android.widget.RadioButton[@text='Female']")
     private WebElement femaleOption;
-    //driver.findElement(By.xpath("//android.widget.RadioButton[@text='Female']"))
+    // driver.findElement(By.xpath("//android.widget.RadioButton[@text='Female']"))
 
     @AndroidFindBy(xpath = "//android.widget.RadioButton[@text='Male']")
     private WebElement maleOption;
@@ -39,7 +37,6 @@ public class FormPage extends AndroidActions {
     @AndroidFindBy(id = "com.androidsample.generalstore:id/btnLetsShop")
     private WebElement shopButton;
 
-
     public void setNameField(String name) {
         nameField.sendKeys(name);
         driver.hideKeyboard();
@@ -47,8 +44,7 @@ public class FormPage extends AndroidActions {
     }
 
     public void setActivity() {
-        Activity activity = new Activity("com.androidsample.generalstore", "com.androidsample.generalstore.MainActivity");
-        driver.startActivity(activity);
+        startActivity("com.androidsample.generalstore", "com.androidsample.generalstore.MainActivity");
     }
 
     public void setGender(String gender) {
@@ -71,6 +67,5 @@ public class FormPage extends AndroidActions {
         return new ProductCatalogue(driver);
 
     }
-
 
 }
